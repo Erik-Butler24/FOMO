@@ -3,13 +3,6 @@ html, body {
     padding: 0;
 }
 
-header {
-    background-color: #147871;
-    padding: 15px 20px;
-    border-top: 4px solid #606060;
-    border-bottom: 4px solid #606060;
-}
-
 header h1 {
     color: #FFFFFF;
     margin: 0;
@@ -20,3 +13,85 @@ main {
     margin: 0;
     padding: 15px;
 }
+
+.nav-item{
+    list-style: none;
+    padding-top: 15px;
+}
+
+.nav-link{
+    list-style: none;
+    padding: 10px;
+}
+
+.active{
+    background-image: none;
+    background-color: none;
+}
+
+.nav-link:hover{
+    text-decoration: none;
+}
+
+.navbar{
+ margin: 0px
+ }
+
+.dropdown-item{
+    padding: 5 px;
+}
+
+.navbar-brand{
+    padding:10px;
+}
+
+.navbar-logo{
+    height: 30px;
+    width: 30px;
+    background:#498087;
+    border-radius: 5px;
+}
+
+.navbar-nav{
+    padding-left:0px;
+}
+
+.center{
+    position: relative;
+    padding-left:210px;
+    padding-right:210px;
+    padding-top:1px;
+    padding-bottom:20px;
+}
+
+.left-side{
+    width:200px;
+    position: absolute;
+    height:100%;
+    left: 0px;
+    top: 0px;
+}
+
+.right-side{
+    width:200px;
+    position: absolute;
+    right:0px;
+    top:0px;
+    height:100%
+}
+
+.footer{
+    bottom:0;
+    background-color:#d0d0d0;
+    width:100%;
+    text-align:center;
+}
+
+p{
+    margin:0;
+}
+
+.maintainance{
+    background-color: red;
+}
+

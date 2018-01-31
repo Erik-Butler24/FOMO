@@ -1,30 +1,79 @@
 ## this is the skeleton of all pages on in this app - it defines the basic html tags
 <!DOCTYPE html>
+
 <html>
     <meta charset="UTF-8">
     <head>
 
-        <title>DMP</title>
+        <title>Family Oriented Music Organization</title>
 
         ## add any site-wide scripts or CSS here; for example, jquery:
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+        ## Bootstrap Stylesheets
+        <link rel="stylesheet" href="${STATIC_URL}homepage/media/bootstrap3/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="${STATIC_URL}homepage/media/bootstrap3/css/bootstrap-theme.min.css" />
+
+
         ## render the static file links with the same name as this template
         <script src="/django_mako_plus/dmp-common.min.js"></script>
         ${ django_mako_plus.links(self) }
+        <script src="${STATIC_URL}homepage/media/bootstrap3/js/bootstrap.min.js"></script>
+
+
+        ## Icon
+        <link rel="icon" href="${STATIC_URL}homepage/media/clef_icon.png"/>
 
     </head>
     <body>
 
+
+    <div class="maintainance">
+        <%block name="maintainance">
+          </%block>
+    </div>
+
+
         <header>
-            <h1>Welcome to the your new app!<h1>
+            <%block name="navigation">
+          </%block>
+
+
         </header>
 
-        <main>
-            <%block name="content">
+        <div class="upper">
+            <%block name="top">
+        </%block>
+        </div>
+
+    <div class="center">
+
+            <div class="left-side">
+                <%block name="left">
+                </%block>
+
+            </div>
+
+                <%block name="content">
                 Site content goes here in sub-templates.
+                </%block>
+
+            <div class="right-side">
+            <%block name="right">
             </%block>
-        </main>
+            </div>
+    </div>
+
+
+        <div class="footer">
+            <%block name="foot">
+            <%! from datetime import datetime %>
+            <p>&copy; ${datetime.now().year}</p>
+            </%block>
+
+        </div>
+
+
 
     </body>
 </html>
