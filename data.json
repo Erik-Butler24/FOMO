@@ -1,0 +1,58 @@
+[
+{
+    "model": "contenttypes.contenttype",
+    "pk": 101,
+    "fields": {
+        "app_label": "admin",
+        "model": "logentry"
+    }
+},
+
+
+{
+    "model": "auth.permission",
+    "pk": 101,
+    "fields": {
+        "name": "Can Return Product",
+        "content_type": 1,
+        "codename": "return_product"
+    }
+},
+
+    {
+    "model": "auth.permission",
+    "pk": 102,
+    "fields": {
+        "name": "Can Cancel Product",
+        "content_type": 1,
+        "codename": "cancel_product"
+    }
+},
+    {
+    "model": "auth.group",
+    "pk": 101,
+    "fields": {
+        "name": "Salespeople",
+        "permissions": [101]
+    }
+},
+
+{
+    "model": "account.user",
+    "pk": 101,
+    "fields": {
+        "password": "pbkdf2_sha256$100000$2xtfsY1i8cEy$aW7yM1yjMJnbBwRNJqIhiRCPAK8uK/I/zaMCs10Xx/4=",
+        "last_login": "2018-02-02T02:48:06.720Z",
+        "is_superuser": true,
+        "email": "Erik.Butler24@gmail.com",
+        "first_name": "Erik",
+        "last_name": "Butler",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2018-02-02T02:32:00.081Z",
+        "birthdate": null,
+        "groups": [101],
+        "user_permissions": [102]
+    }
+}
+]

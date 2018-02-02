@@ -5,6 +5,8 @@ from django.contrib.auth.models import Permission, Group, ContentType
 
 class UserClassTest(TestCase):
 
+    fixtures = ['data.json']
+
     def setUp(self):
         self.u1 = amod.User()
         self.u1.email = 'Homer@simpsons.com'
