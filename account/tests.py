@@ -43,6 +43,7 @@ class UserClassTest(TestCase):
 
     def test_change_info(self):
         self.u1.first_name = 'heythere'
-        self.u1.save
+        self.u1.save()
         u2 = amod.User.objects.get(email = 'Homer@simpsons.com')
-        self.assertEquals(self.u1.first_name, u2.first_name)
+        self.assertEquals(self.u1.first_name, 'heythere')
+        self.assertEquals(u2.first_name, 'heythere')
