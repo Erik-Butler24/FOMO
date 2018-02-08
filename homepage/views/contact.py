@@ -4,7 +4,6 @@ from datetime import datetime, timezone
 
 @view_function
 def process_request(request):
-    utc_time = datetime.utcnow()
     context = { }
     if request.method == "POST":
         print(request.POST['first name'])
