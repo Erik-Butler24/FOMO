@@ -56,6 +56,10 @@ main {
     padding-left:0px;
 }
 
+.navbar-right{
+    padding-right: 40px;
+}
+
 .center{
     position: relative;
     padding-left:210px;
@@ -95,3 +99,7 @@ p{
     background-color: red;
 }
 
+.invisible {
+  visibility: hidden;
+  font-size:0;
+}

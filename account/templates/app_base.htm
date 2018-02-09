@@ -1,20 +1,26 @@
 <%inherit file="/homepage/templates/base.htm" />
 
 <%block name="navigation">
-<nav class="navbar navbar-inverse">
+            <nav class="navbar navbar-inverse">
                 <a class="navbar-brand" href="/"><img class="navbar-logo" src="${STATIC_URL}homepage/media/clef_icon.png"></a>
 
+
+                <ul class="navbar-nav navbar-right">
                     <li class="nav-item dropdown">
+
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                         Login  &#9662;
+                         ${'login' if request.user.is_anonymous else request.user }  &#9662;
                         </a>
 
+
                         <ul class="dropdown-menu">
-                          <li><a href="#">No Functionality</a></li>
-                          <li><a href="#">Still Nothing</a></li>
-                          <li><a href="#">Nope</a></li>
+                            <li><a class = "${'invisible' if request.user.is_authenticated else '' }" href="/account/login">Login</a></li>
+                            <li><a class = "${'invisible' if request.user.is_authenticated else '' }" href="/account/create">Create User</a></li>
+                            <li><a class = "${'invisible' if request.user.is_anonymous else '' }" href="/account/logout">Logout</a></li>
                         </ul>
+
                     </li>
                 </ul>
+
             </nav>
 </%block>

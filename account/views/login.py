@@ -3,6 +3,9 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.conf import settings
 from django_mako_plus import view_function, jscontext
+from django.contrib.auth import authenticate, login
+from account import models as amod
+import re
 
 
 @view_function
@@ -14,7 +17,7 @@ def process_request(request):
         form = LoginForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            #login user
+            LoginForm.commit(form, request)
             return HttpResponseRedirect('/')
 
     # if a GET (or any other method) we'll create a blank form
@@ -32,9 +35,9 @@ class LoginForm(forms.Form):
     email = forms.CharField(label='Email')
     password = forms.CharField(label='Password')
 
-    def clean_password(self):
-        print(self.cleaned_data)
-        password = self.cleaned_data.get('password')
-        if len(password) < 8:
-            raise forms.ValidationError('Password must be at least 8 characters')
-        return 0
+    def clean(self):
+        user = authenticate(email = self.cleaned_data.get('email'),password = self.cleaned_data.get('password'))
+
+    def commit(self, request):
+        user = authenticate(email = self.cleaned_data.get('email'),password = self.cleaned_data.get('password'))
+        login(request, user)
