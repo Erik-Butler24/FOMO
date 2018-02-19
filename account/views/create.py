@@ -31,20 +31,17 @@ def process_request(request):
 
 
 class createUserForm(forms.Form):
-    email = forms.CharField(label='Email')
-    password = forms.CharField(label='Password')
-    password2 = forms.CharField(label='Re-enter Password')
+    email = forms.EmailField(label='Email')
+    password = forms.CharField(label='Password', widget = forms.PasswordInput)
+    password2 = forms.CharField(label='Re-enter Password', widget = forms.PasswordInput)
     first_name = forms.CharField(label='First Name')
     last_name = forms.CharField(label='Last Name')
 
     def clean(self):
         password = self.cleaned_data.get('password')
         password2 = self.cleaned_data.get('password2')
-        if password != password2:
-            print(password)
-            print(password2)
+        if password != password2 and password is not None:
             raise forms.ValidationError('Passwords do not match')
-
 
     def clean_password(self):
         password = self.cleaned_data.get('password')

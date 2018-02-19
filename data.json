@@ -3,7 +3,7 @@
     "model": "contenttypes.contenttype",
     "pk": 101,
     "fields": {
-        "app_label": "admin",
+        "app_label": "admin1",
         "model": "logentry"
     }
 },
@@ -32,7 +32,7 @@
     "model": "auth.group",
     "pk": 101,
     "fields": {
-        "name": "Salespeople",
+        "name": "Salespeople1",
         "permissions": [101]
     }
 },
