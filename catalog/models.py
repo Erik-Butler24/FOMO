@@ -13,7 +13,7 @@ class Product(PolymorphicModel):
     TypeChoices = (
         ('B', 'Bulk Product'),
         ('I', 'Individual Product'),
-        ('R', 'Retal Product')
+        ('R', 'Rental Product')
     )
 
     StatusChoices = (
@@ -27,8 +27,7 @@ class Product(PolymorphicModel):
     Price = models.DecimalField(decimal_places=2, max_digits=10)
     CreateDate = models.DateTimeField(auto_now_add=True)
     LastModified = models.DateTimeField(auto_now=True)
-    ProductType = models.CharField(max_length=1, choices=TypeChoices)
-    Status = models.CharField(max_length=1, choices=StatusChoices)
+    Status = models.TextField(max_length=1, choices=StatusChoices)
 
 
 class BulkProduct(Product):

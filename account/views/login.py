@@ -1,11 +1,8 @@
 from django import forms
-from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from django.conf import settings
-from django_mako_plus import view_function, jscontext
+from django_mako_plus import view_function
 from django.contrib.auth import authenticate, login
-from account import models as amod
-import re
+
 
 
 @view_function
@@ -32,11 +29,13 @@ def process_request(request):
 
 
 class LoginForm(forms.Form):
-    email = forms.CharField(label='Email')
-    password = forms.CharField(label='Password')
+    email = forms.EmailField(label='Email')
+    password = forms.CharField(label='Password', widget = forms.PasswordInput)
 
     def clean(self):
         user = authenticate(email = self.cleaned_data.get('email'),password = self.cleaned_data.get('password'))
+        if user is None:
+            raise forms.ValidationError('Username or password is incorrect')
 
     def commit(self, request):
         user = authenticate(email = self.cleaned_data.get('email'),password = self.cleaned_data.get('password'))
