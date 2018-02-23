@@ -53,7 +53,6 @@ class createUserForm(forms.Form):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        print(email)
         if amod.User.objects.filter(email = email):
             raise forms.ValidationError('There is already an account with that Email')
         return email

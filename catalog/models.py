@@ -8,6 +8,9 @@ class Category(models.Model):
     Name = models.TextField()
     Description = models.TextField()
 
+    def __str__(self):
+        return self.Name
+
 
 class Product(PolymorphicModel):
     TypeChoices = (

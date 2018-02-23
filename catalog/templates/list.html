@@ -1,0 +1,43 @@
+<%inherit file="app_base.htm" />
+
+<%block name="content">
+<h1>Product List</h1>
+
+<table>
+    <tr>
+
+        <th>Name</th>
+        <th>Product Type</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Quantity</th>
+
+    </tr>
+
+% for item in list:
+    <tr>
+        <td>${item.Name}</td>
+        <td>${item.__class__.__name__}</td>
+        <td>${item.Category}</td>
+        <td>${item.Description}</td>
+        <td>$${item.Price}</td>
+        % if item.__class__.__name__ == 'BulkProduct':
+            <td>${item.Quantity}</td>
+        % else:
+            <td>1</td>
+        % endif
+        <td><a href="/catalog/create/${item.id}">Edit</a></td>
+        <td><a href="/catalog/delete/${item.id}">Delete</a></td>
+
+    </tr>
+% endfor
+</table>
+
+<br>
+
+<a href="/catalog/create" class="btn btn-primary">New Product</a>
+
+
+</%block>
+
