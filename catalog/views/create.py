@@ -8,8 +8,6 @@ from catalog import models as cmod
 @view_function
 def process_request(request):
 
-    EditProduct = cmod.Product.objects.get(id = request.urlparams[0])
-
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
@@ -21,7 +19,8 @@ def process_request(request):
 
     # if a GET (or any other method) we'll create a blank form
 
-    elif EditProduct is not None:
+    elif request.urlparams[0]:
+        EditProduct = cmod.Product.objects.get(id = request.urlparams[0])
         if EditProduct.__class__.__name__ == 'BulkProduct':
             form = createProductForm(initial={'ProductType': 'B',
                                               'Quantity': EditProduct.Quantity,
@@ -77,9 +76,10 @@ class createProductForm(forms.Form):
     MaxRental = forms.IntegerField(label='Max Rental Days', required=False)
     RetireDate = forms.DateTimeField(label='Retire Date', required=False)
 
-
     def commit(self,request):
-        newProduct = cmod.Product.objects.get(id = request.urlparams[0])
+        if request.urlparams[0]:
+            newProduct = cmod.Product.objects.get(id = request.urlparams[0])
+        else: newProduct = None
 
         if self.cleaned_data.get('ProductType') == 'B':
                 if newProduct is None: newProduct = cmod.BulkProduct()
@@ -103,3 +103,24 @@ class createProductForm(forms.Form):
         newProduct.Description = self.cleaned_data.get('Description')
         newProduct.Price = self.cleaned_data.get('Price')
         newProduct.save()
+
+    def clean(self):
+        if self.cleaned_data.get('ProductType') == 'B':
+                if not self.cleaned_data.get('Quantity'):
+                    raise forms.ValidationError('Quantity field is required')
+                if not self.cleaned_data.get('ReorderTrigger'):
+                    raise forms.ValidationError('Reorder Trigger field is required')
+                if not self.cleaned_data.get('ReorderQuantity'):
+                    raise forms.ValidationError('Reorder Quantity field is required')
+
+        if self.cleaned_data.get('ProductType') == 'I':
+                if not self.cleaned_data.get('ItemID'):
+                    raise forms.ValidationError('Item ID field is required')
+
+        if self.cleaned_data.get('ProductType') == 'R':
+                if not self.cleaned_data.get('ItemID'):
+                    raise forms.ValidationError('Item ID field is required')
+                if not self.cleaned_data.get('MaxRental'):
+                    raise forms.ValidationError('Max Rental days field is required')
+                if not self.cleaned_data.get('RetireDate'):
+                    raise forms.ValidationError('Retire Date field is required')
