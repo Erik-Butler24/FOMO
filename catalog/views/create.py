@@ -59,7 +59,7 @@ def process_request(request):
         'form': form,
 
     }
-    return request.dmp_render('create.html', context)
+    return request.dmp.render('create.html', context)
 
 
 class createProductForm(forms.Form):

@@ -25,7 +25,7 @@ def process_request(request):
         'form': form,
 
     }
-    return request.dmp_render('createCategory.html', context)
+    return request.dmp.render('createCategory.html', context)
 
 
 class createProductForm(forms.Form):

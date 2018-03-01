@@ -8,4 +8,4 @@ def process_request(request):
     if request.method == "POST":
         print(request.POST['first name'])
         print(request.POST['last name'])
-    return request.dmp_render('contact.html', context)
+    return request.dmp.render('contact.html', context)

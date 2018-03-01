@@ -5,4 +5,4 @@ from datetime import datetime, timezone
 @view_function
 def process_request(request):
 
-    return request.dmp_render('index.html')
+    return request.dmp.render('index.html')

@@ -3,4 +3,4 @@ from django_mako_plus import view_function
 
 @view_function
 def process_request(request):
-    return request.dmp_render('about.html')
+    return request.dmp.render('about.html')
