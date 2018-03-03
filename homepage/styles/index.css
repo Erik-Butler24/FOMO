@@ -1,8 +1,32 @@
 .center{
-    background-image: url(..//media/musical-instruments.jpg);
-    color:white;
-    text-align:right;
-    padding-left:500px;
-    padding-right: 20px;
-    height:700px;
+    background: #000000;
+    background-image: url(..//media/music-lessons.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    text-align:left;
+    padding-top:50px;
+    padding-left:100px;
+    height: 90vh;
     }
+
+h1{
+font-size:5vw;
+color: #2E747A;
+font-family: Georgia;
+
+}
+
+h2{
+font-size:2.5vw;
+color: #777777;
+font-family: Georgia;
+
+}
+
+
+.btn{
+margin-top:2vh;
+margin-left: 15vw;
+font-size:1.5vw;
+border: 0px;
+}

@@ -1,5 +1,5 @@
 (function(context) {
-    
+$(function() {
 $("#id_ProductType").on('change', function(){
 
 var Type = $("#id_ProductType").val()
@@ -64,6 +64,9 @@ $("#id_MaxRental").closest('p').show(300)
 $("#id_RetireDate").closest('p').show(300)
 }
 });
+});
+    
+
 
 
     

@@ -10,5 +10,5 @@ def process_request(request):
         'list': cmod.Product.objects.filter(Status = 'A'),
 
     }
-    return request.dmp.render('list.html', context)
+    return request.dmp.render('index.html', context)
 

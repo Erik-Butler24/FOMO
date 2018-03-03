@@ -34,7 +34,7 @@ main {
 }
 
 .navbar{
- margin: 0px
+ margin: 0px;
  }
 
 .dropdown-item{
@@ -54,6 +54,7 @@ main {
 
 .navbar-nav{
     padding-left:0px;
+    padding-right: 0px;
 }
 
 .navbar-right{
@@ -67,6 +68,8 @@ main {
     padding-top:1px;
     padding-bottom:20px;
 }
+
+
 
 .left-side{
     width:200px;
@@ -102,4 +105,8 @@ p{
 .invisible {
   visibility: hidden;
   font-size:0;
+}
+
+.skip{
+  display:none;
 }

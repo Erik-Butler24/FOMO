@@ -8,8 +8,8 @@ from catalog import models as cmod
 @view_function
 def process_request(request):
 
-    EditProduct = cmod.Product.objects.get(id = request.urlparams[0])
+    EditProduct = cmod.Product.objects.get(id = request.dmp.urlparams[0])
     EditProduct.Status = 'I'
     EditProduct.save()
 
-    return HttpResponseRedirect('/catalog/list')
+    return HttpResponseRedirect('/catalog/index')

@@ -15,12 +15,12 @@ def process_request(request):
         # check whether it's valid:
         if form.is_valid():
             createProductForm.commit(form, request)
-            return HttpResponseRedirect('/catalog/list')
+            return HttpResponseRedirect('/catalog/index')
 
     # if a GET (or any other method) we'll create a blank form
 
-    elif request.urlparams[0]:
-        EditProduct = cmod.Product.objects.get(id = request.urlparams[0])
+    elif request.dmp.urlparams[0]:
+        EditProduct = cmod.Product.objects.get(id = request.dmp.urlparams[0])
         if EditProduct.__class__.__name__ == 'BulkProduct':
             form = createProductForm(initial={'ProductType': 'B',
                                               'Quantity': EditProduct.Quantity,
@@ -77,8 +77,8 @@ class createProductForm(forms.Form):
     RetireDate = forms.DateTimeField(label='Retire Date', required=False)
 
     def commit(self,request):
-        if request.urlparams[0]:
-            newProduct = cmod.Product.objects.get(id = request.urlparams[0])
+        if request.dmp.urlparams[0]:
+            newProduct = cmod.Product.objects.get(id = request.dmp.urlparams[0])
         else: newProduct = None
 
         if self.cleaned_data.get('ProductType') == 'B':
