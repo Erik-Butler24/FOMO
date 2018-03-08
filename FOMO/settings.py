@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'homepage',
     'account',
     'cuser',
-    'catalog',
     'manager',
+    'catalog',
     'polymorphic',
 ]
 

@@ -1,43 +1,9 @@
-<%inherit file="app_base.htm" />
+<%inherit file="base.htm" />
 
 <%block name="content">
-<h1>Catalog</h1>
-
-<table>
-    <tr>
-
-        <th>Name</th>
-        <th>Product Type</th>
-        <th>Category</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Quantity</th>
-
-    </tr>
-
-% for item in list:
-    <tr>
-        <td>${item.Name}</td>
-        <td>${item.__class__.__name__}</td>
-        <td>${item.Category}</td>
-        <td>${item.Description}</td>
-        <td>$${item.Price}</td>
-        % if item.__class__.__name__ == 'BulkProduct':
-            <td>${item.Quantity}</td>
-        % else:
-            <td>1</td>
-        % endif
-        <td><a href="/catalog/create/${item.id}">Edit</a></td>
-        <td><a href="/catalog/delete/${item.id}">Delete</a></td>
-
-    </tr>
-% endfor
-</table>
-
-<br>
-
-<a href="/catalog/create" class="btn btn-primary">New Product</a>
-
-
+    <div class="content">
+        <h3>Congratulations -- you've successfully created a new django-mako-plus app!</h3>
+        <h4>Next Up: Go through the django-mako-plus tutorial and add Javascript, CSS, and urlparams to this page.</h4>
+        <h4 class="utc-time">Current time in UTC: ${ utc_time }</h4>
+    </div>
 </%block>
-
