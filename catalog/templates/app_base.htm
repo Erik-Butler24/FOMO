@@ -1,0 +1,33 @@
+<%inherit file="/homepage/templates/base.htm" />
+
+<%block name="navigation">
+            <nav class="navbar navbar-inverse">
+                <a class="navbar-brand" href="/"><img class="navbar-logo" src="${STATIC_URL}homepage/media/clef_icon.png"></a>
+
+                <ul class="navbar-nav">
+                    <li class="nav-item ${'active' if request.dmp.page =='list' else '' }">
+                            <a class="nav-link" href="/manager/index">Products</a>
+                    </li>
+
+                </ul>
+
+
+                <ul class="navbar-nav navbar-right">
+                    <li class="nav-item dropdown">
+
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                         ${'login' if request.user.is_anonymous else request.user }  &#9662;
+                        </a>
+
+
+                        <ul class="dropdown-menu">
+                            <li><a class = "${'invisible' if request.user.is_authenticated else '' }" href="/account/login">Login</a></li>
+                            <li><a class = "${'invisible' if request.user.is_authenticated else '' }" href="/account/create">Create User</a></li>
+                            <li><a class = "${'invisible' if request.user.is_anonymous else '' }" href="/account/logout">Logout</a></li>
+                        </ul>
+
+                    </li>
+                </ul>
+
+            </nav>
+</%block>
