@@ -28,3 +28,7 @@ text-align: right;
 margin-right: 200px;
 font-size: 15pt;
 }
+
+#tiles_container_container{
+min-height:800px;
+}

@@ -9,12 +9,10 @@ $(function(context) {
 $(function(context) {
     return function(){$("#Pageup").on('click', function(){
     if(context.Pagenum < context.MaxPages){
-    context.Pagenum ++
     var container = $('#tiles_container')
-    container.fadeOut()
-    container.load('/catalog/tiles/' + context.CatID + '/' + context.Pagenum)
-    $("#DisplayPageNumber").text(context.Pagenum)
-    container.fadeIn()}
+    context.Pagenum ++
+    container.fadeOut('fast',  function() {container.load('/catalog/tiles/' + context.CatID + '/' + context.Pagenum, function() {container.fadeIn()})})
+    $("#DisplayPageNumber").text(context.Pagenum)}
     });
     };
     }(DMP_CONTEXT.get()));
@@ -22,12 +20,10 @@ $(function(context) {
 $(function(context) {
     $(function(){$("#Pagedn").on('click', function(){
     if(context.Pagenum > 1){
-    context.Pagenum --
     var container = $('#tiles_container')
-    container.fadeOut()
-    container.load('/catalog/tiles/' + context.CatID + '/' + context.Pagenum)
-    $("#DisplayPageNumber").text(context.Pagenum)
-    container.fadeIn()}
+    container.fadeOut('fast',  function() {container.load('/catalog/tiles/' + context.CatID + '/' + context.Pagenum, function() {container.fadeIn()})})
+    context.Pagenum --
+    $("#DisplayPageNumber").text(context.Pagenum)}
     });
     });
     }(DMP_CONTEXT.get()));
