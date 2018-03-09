@@ -1,0 +1,13 @@
+.product_item{
+    padding: 8px;
+    color: #498087;
+    display: inline-block;
+    list-style-type: none;
+    font-size: 20px;
+    text-align: center;
+    }
+
+.product_image{
+    width: 300px;
+}
+

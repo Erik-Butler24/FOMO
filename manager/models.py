@@ -33,6 +33,18 @@ class Product(PolymorphicModel):
     LastModified = models.DateTimeField(auto_now=True)
     Status = models.TextField(max_length=1, choices=StatusChoices)
 
+    def image_URLs(self):
+        return self.images
+
+    def img_URL(self):
+        images = self.images.all()
+        if not images:
+            url = "catalog/media/404.jpg"
+        else:
+            url = "catalog/media/" + images[0].filename
+
+        return url
+
 
 class BulkProduct(Product):
     Quantity = models.IntegerField()
@@ -51,5 +63,5 @@ class RentalProduct(Product):
 
 
 class ProductImage(models.Model):
-    filename = models.TextField
+    filename = models.TextField()
     product = models.ForeignKey('Product',on_delete=models.CASCADE,related_name='images')

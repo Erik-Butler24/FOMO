@@ -1,0 +1,21 @@
+<%inherit file="base_ajax.htm" />
+
+<%block name="content">
+<ul id = "product_list">
+    % for item in list:
+
+        <li class="product_item">
+            <img class="product_image" src=${STATIC_URL}${item.img_URL()} />
+            <br>
+            ${item.Name}
+            <br>
+            (${item.Category})
+        </li>
+    % endfor
+
+</ul>
+
+
+</ul>
+</%block>
+

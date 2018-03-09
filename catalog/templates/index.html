@@ -1,20 +1,32 @@
 <%inherit file="app_base.htm" />
 
 <%block name="left">
-<table>
-    <th><a href="/catalog/index">All</a></th>
+<ul>
+    <li class="category_item"><a href="/catalog/index">All</a></li>
 % for item in list:
 
-    <tr>
-        <td><a href="/catalog/index/${item.id}">${item.Name}</a></td>
-    </tr>
+    <li class="category_item"><a href="/catalog/index/${item.id}">${item.Name}</a></li>
 % endfor
-</table>
+</ul>
 </%block>
 
 
 <%block name="content">
-<h1>Catalog</h1>
+% if CatName is not None:
+    <h1>${CatName}</h1>
+% else:
+    <h1>All Products</h1>
+% endif
+
+<div id = 'paginator'>
+    <a id="Pagedn"><</a>
+     Page <span id = "DisplayPageNumber">1</span> of 00000
+    <a id="Pageup">></a>
+
+</div>
+
+<div id="tiles_container"></div>
+
 
 </%block>
 

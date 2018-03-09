@@ -1,6 +1,14 @@
-(function(context) {
-    
-    // utc_epoch comes from index.py
-    console.log('Current epoch in UTC is ' + context.utc_epoch);
-    
-})(DMP_CONTEXT.get());
+$(function(context) {
+    return function(){
+    var container = $('#tiles_container')
+    console.log(DMP_CONTEXT.lastContext.CatID)
+    container.load('/catalog/tiles/' + DMP_CONTEXT.lastContext.CatID)
+
+    }
+
+
+
+}(DMP_CONTEXT.get()));
+
+
+
