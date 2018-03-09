@@ -16,7 +16,9 @@ def process_request(request):
         ProductList = cmod.Product.objects.all()
 
 
+    Page = int(request.dmp.urlparams[1])
 
+    ProductList = ProductList[((Page-1)*6):(Page*6)]
 
     context = {
 

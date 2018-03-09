@@ -5,9 +5,25 @@
     list-style-type: none;
     font-size: 20px;
     text-align: center;
+    position:relative;
+    border: solid;
+    border-width: 1px;
+    border-color: #498087;
+    border-radius: 15px;
+    box-shadow: 5px 5px #EEEEEE;
+    margin: 10px;
     }
 
 .product_image{
     width: 300px;
 }
 
+.price{
+    position:absolute;
+    top:0;
+    right:0;
+    color:white;
+    padding: 2px;
+    background-color: #498087;
+    border-radius: 5px;
+}

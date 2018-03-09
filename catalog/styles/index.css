@@ -16,5 +16,15 @@ h1{
 }
 
 #product_list{
-width: 100%;
+max-width: 1425px;
+}
+
+.active{
+color: #99C0C7;
+}
+
+#paginator{
+text-align: right;
+margin-right: 200px;
+font-size: 15pt;
 }

@@ -2,10 +2,9 @@
 
 <%block name="left">
 <ul>
-    <li class="category_item"><a href="/catalog/index">All</a></li>
+    <li class="category_item"><a href="/catalog/index"  class="${'active' if CatName is None else '' }">All</a></li>
 % for item in list:
-
-    <li class="category_item"><a href="/catalog/index/${item.id}">${item.Name}</a></li>
+    <li class="category_item"><a href="/catalog/index/${item.id}" class="${'active' if CatName == item.Name else '' }" >${item.Name}</a></li>
 % endfor
 </ul>
 </%block>
@@ -19,9 +18,9 @@
 % endif
 
 <div id = 'paginator'>
-    <a id="Pagedn"><</a>
-     Page <span id = "DisplayPageNumber">1</span> of 00000
-    <a id="Pageup">></a>
+    <a id="Pagedn"><span class="glyphicon glyphicon-chevron-left"></span></a>
+     Page <span id = "DisplayPageNumber">1</span> of ${MaxPages}
+    <a id="Pageup"><span class="glyphicon glyphicon-chevron-right"></span></a>
 
 </div>
 
