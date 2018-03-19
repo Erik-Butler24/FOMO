@@ -1,0 +1,39 @@
+<%inherit file="app_base.htm" />
+
+
+<%block name="content">
+
+<div id="thumb_div">
+    % for item in product.img_URLs():
+        <li id="thumb_list">
+            <img class="thumb" src=${STATIC_URL}catalog/media/${item.filename} alt="${product.Name}" />
+        </li>
+    % endfor
+</div>
+
+<div id="product_image">
+    <img id="main_image" src=${STATIC_URL}${product.img_URL()} alt="${product.Name}" />
+</div>
+
+<div id="product_info">
+    <h1>${product.Name}</h1>
+
+    <span id="price">$${product.Price}</span>
+    <br>
+    <br>
+    ${product.Description}
+    <br>
+    <a class="btn btn-primary">Buy now</a>
+
+    % if product.__class__.__name__ == "BulkProduct":
+        <input id="quantity" type="number" name="PurchaseQuantity" value=0><br>
+    % endif
+
+
+</div>
+
+
+
+
+</%block>
+

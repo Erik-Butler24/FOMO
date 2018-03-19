@@ -33,8 +33,8 @@ class Product(PolymorphicModel):
     LastModified = models.DateTimeField(auto_now=True)
     Status = models.TextField(max_length=1, choices=StatusChoices)
 
-    def image_URLs(self):
-        return self.images
+    def img_URLs(self):
+        return self.images.all()
 
     def img_URL(self):
         images = self.images.all()

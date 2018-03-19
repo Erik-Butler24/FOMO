@@ -31,3 +31,12 @@
 
             </nav>
 </%block>
+
+<%block name="left">
+<ul>
+    <li class="category_item"><a href="/catalog/index"  class="${'active' if CatName is None else '' }">All</a></li>
+% for item in list:
+    <li class="category_item"><a href="/catalog/index/${item.id}" class="${'active' if CatName == item.Name else '' }" >${item.Name}</a></li>
+% endfor
+</ul>
+</%block>
