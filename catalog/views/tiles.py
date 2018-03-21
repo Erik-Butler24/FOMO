@@ -9,7 +9,6 @@ def process_request(request):
     CategoryID = request.dmp.urlparams[0]
 
     if CategoryID != "0":
-        print(CategoryID)
         ProductList = cmod.Product.objects.filter(Category = CategoryID)
 
     else:

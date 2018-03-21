@@ -40,3 +40,21 @@
 % endfor
 </ul>
 </%block>
+
+
+<%block name="right">
+<ul>
+    % if request.last_five:
+        %if request.dmp.page == "details":
+            Here's where I'd put the removal code
+        %endif
+
+        % for item in request.last_five:
+            <li class="recent_item">
+                <img class="recent_image" src=${STATIC_URL}${item.img_URL()} />
+                <a href="/catalog/details/${item.id}" >${item.Name}</a>
+            </li>
+        % endfor
+    %endif
+</ul>
+</%block>
