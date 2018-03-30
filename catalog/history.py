@@ -7,46 +7,41 @@ class LastFiveMiddleware:
 
     def __call__(self,request):
 
-        #get list of ID's from session
+        #get list of recent ID's from session
         idlist = request.session.get('id')
 
         #new empty list for product objects
-        request.last_five = []
+        ProdList = []
 
         #add products based on id's in id list
-
         if idlist:
             for item in idlist:
-                request.last_five.append(cmod.Product.objects.get(id = item))
+                ProdList.append(cmod.Product.objects.get(id = item))
 
-            #subsection the product list
-            request.last_five = request.last_five[:5]
-
-
+        #if you're on the product page...
         if request.path[0:17] =='/catalog/details/':
             LastProduct = cmod.Product.objects.get(id = request.path[17:])
 
             #If it's in the list remove it
-            if LastProduct in request.last_five:
-                request.last_five.remove(LastProduct)
-
-            #else remove the last object
-            elif len(request.last_five) > 5:
-                request.last_five.pop()
-
+            if LastProduct in ProdList:
+                ProdList.remove(LastProduct)
 
             #and add it again
-            request.last_five.insert(0,LastProduct)
+            ProdList.insert(0,LastProduct)
 
+            #show second five
+            request.last_five = ProdList[1:6]
+
+        #if anywhere else, show first five
+        else:
+            request.last_five = ProdList[0:5]
+
+        #trim the list if necessary
+        ProdList = ProdList[0:6]
 
         response = self.get_response(request)
 
-        #put the id list back in the session
-        idlist = []
-        for item in request.last_five:
-            idlist.append(item.id)
-
-        request.session['id'] = idlist
-
+        #put recent id's back into the session (request.session equals the id for each item in prodlist)
+        request.session['id'] = [item.id for item in ProdList]
 
         return response

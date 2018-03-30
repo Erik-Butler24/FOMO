@@ -17,3 +17,11 @@ list-style-type: none;
 .recent_image{
 height: 50px;
 }
+
+#recent_list{
+padding: 25px;
+}
+
+.recent_item{
+    text-align: center;
+}

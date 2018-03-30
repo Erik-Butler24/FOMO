@@ -1,12 +1,11 @@
 from django_mako_plus import view_function, jscontext
 from manager import models as cmod
-import math
 
 
 
 @view_function
-def process_request(request):
-    product =  cmod.Product.objects.get(id = request.dmp.urlparams[0])
+def process_request(request, product:cmod.Product):
+    #The get(urlparams[0])happens right there^^
 
 
     context = {
