@@ -3,18 +3,18 @@
 <%block name="content">
 <ul id = "product_list">
     % for item in list:
-
-
-    <li class="product_item">
-        <a href="/catalog/details/${item.id}">
-                <div class="price">$${item.Price}</div>
-                <img class="product_image" src=${STATIC_URL}${item.img_URL()} />
-                <br>
-                ${item.Name}
-                <br>
-                (${item.Category})
-        </a>
-    </li>
+        % if (item.Status == "A"):
+            <li class="product_item">
+                <a href="/catalog/details/${item.id}">
+                        <div class="price">$${item.Price}</div>
+                        <img class="product_image" src=${STATIC_URL}${item.img_URL()} />
+                        <br>
+                        ${item.Name}
+                        <br>
+                        (${item.Category})
+                </a>
+            </li>
+        % endif
     % endfor
 
 </ul>

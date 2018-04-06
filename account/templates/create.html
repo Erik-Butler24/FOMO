@@ -2,13 +2,17 @@
 
 <%block name="content">
 
-<h1>Create User</h1>
-
+<div class="login-page">
+  <div class="form">
+    <h1>Create User</h1>
     <form action="" method = "POST">
         ${ csrf_input }
         ${ form.as_p() }
-        <input type="submit" value="Submit"/>
+        <input type="submit" value="Submit" class="btn btn-primary"/>
     </form>
+      Already have an account? <a href="/account/login">Login here</a>
+  </div>
+</div>
 
 </%block>
 

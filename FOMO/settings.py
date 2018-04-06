@@ -59,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'catalog.history.LastFiveMiddleware',
+    'account.basicauth.BasicAuthMiddleware'
 ]
 
 ROOT_URLCONF = 'FOMO.urls'
@@ -235,4 +236,5 @@ LOGGING = {
     },
 }
 
+LOGIN_URL = '/account/login/'
 

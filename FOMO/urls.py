@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.urls import path
 
 urlpatterns = [
     # the built-in Django administrator
@@ -24,4 +25,6 @@ urlpatterns = [
 
     # the DMP router - if DEFAULT_HOMEPAGE is set, this should be the last pattern (the wildcards match everything)
     url('', include('django_mako_plus.urls')),
+
+    path('account/', include('django.contrib.auth.urls')),
 ]

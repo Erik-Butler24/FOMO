@@ -1,0 +1,37 @@
+<%inherit file="app_base.htm" />
+
+<%block name="content">
+<h1>Shopping Cart</h1>
+
+<table>
+    <tr>
+
+        <th>Name</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Quantity</th>
+
+    </tr>
+
+% for item in cart:
+    <tr>
+        <td>${item.Name}</td>
+        <td>${item.Category}</td>
+        <td>$${item.Price}</td>
+        % if item.__class__.__name__ == 'BulkProduct':
+            <td>${item.Quantity}</td>
+        % else:
+            <td>1</td>
+        % endif
+        <td><a href="/manager/delete/${item.id}">Remove</a></td>
+
+    </tr>
+% endfor
+</table>
+
+<br>
+
+<a href="/catalog/checkout" class="btn btn-primary">Checkout</a>
+
+</%block>
+
