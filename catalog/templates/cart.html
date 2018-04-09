@@ -3,29 +3,39 @@
 <%block name="content">
 <h1>Shopping Cart</h1>
 
-<div id="cart_container">
-    <table>
-    % for item in cart:
-        <tr>
 
-            <td><img class="product_image" src=${STATIC_URL}${item.img_URL()} /></td>
-            <td><a href="/catalog/details/${item.id}">${item.Name}</a></td>
-                        % if item.__class__.__name__ == 'BulkProduct':
-                <td>${item.Quantity}</td>
-            % else:
-                <td>1</td>
-            % endif
-            <td>$${item.Price}</td>
-            <td><a href="/manager/delete/${item.id}">Remove</a></td>
+    <div id="cart_container">
+%if not cart.active_items(include_tax_item = False):
+    <h2>Your cart is empty!</h2>
+    <a href="/catalog" class="btn btn-primary">Continue Shopping</a>
 
-        </tr>
-    % endfor
-    </table>
-    <br>
-    <b>Total:</b> $200
-    <br>
+%else:
 
-    <a href="/catalog/checkout" class="btn btn-primary">Checkout</a>
-</div>
+        <table>
+        % for item in cart.active_items(include_tax_item = False):
+            <tr>
+
+                <td><img class="product_image" src=${STATIC_URL}${item.product.img_URL()} /></td>
+                <td><a href="/catalog/details/${item.product.id}">${item.product.Name}</a></td>
+                            % if item.__class__.__name__ == 'BulkProduct':
+                    <td>${item.quantity}</td>
+                % else:
+                    <td>${item.quantity}</td>
+                % endif
+                <td>$${item.extended}</td>
+                <td><a href="/catalog/remove/${item.id}">Remove</a></td>
+
+            </tr>
+        % endfor
+        </table>
+        <br>
+        <b>Total:</b> $${cart.total_price}
+        <br>
+
+        <a href="/catalog/checkout" class="btn btn-primary">Checkout</a>
+
+
+%endif
+    </div>
 </%block>
 

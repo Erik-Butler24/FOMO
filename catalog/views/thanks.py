@@ -7,6 +7,7 @@ def process_request(request):
 
     context = {
         'list': cmod.Category.objects.all(),
+        'cart_size':0,
 
     }
     return request.dmp.render('thanks.html', context)

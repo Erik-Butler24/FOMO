@@ -16,7 +16,10 @@ class LastFiveMiddleware:
         #add products based on id's in id list
         if idlist:
             for item in idlist:
-                ProdList.append(cmod.Product.objects.get(id = item))
+                AddedProduct = cmod.Product.objects.get(id = item)
+                #only append active products
+                if AddedProduct.Status == "A":ProdList.append(AddedProduct)
+
 
         #if you're on the product page...
         if request.path[0:17] =='/catalog/details/':

@@ -2,12 +2,16 @@ from django import forms
 from django.http import HttpResponseRedirect
 from django_mako_plus import view_function
 from manager import models as cmod
+from account import models as amod
 import stripe
 
 
 
 @view_function
 def process_request(request):
+
+    cart = amod.User.objects.get(email = request.user).get_shopping_cart()
+    cartsize = cart.num_items()
 
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -16,18 +20,6 @@ def process_request(request):
         # check whether it's valid:
         if form.is_valid():
             CheckoutForm.commit(form, request)
-            stripe.api_key = "sk_test_wadBVqwzbMzhY9jhgE5QqmJW"
-
-            # Token is created using Checkout or Elements!
-            # Get the payment token ID submitted by the form:
-            token = form.cleaned_data.get('stripeToken')
-
-            charge = stripe.Charge.create(
-                amount=999,
-                currency='usd',
-                description='Example charge',
-                source=token,
-            )
             return HttpResponseRedirect('/catalog/thanks')
 
     # if a GET (or any other method) we'll create a blank form
@@ -37,13 +29,15 @@ def process_request(request):
     context = {
         'form': form,
         'list': cmod.Category.objects.all(),
-        'cart': cmod.Product.objects.filter(Status = 'A'),
+        'cart': cart,
+        'cart_size': cartsize,
 
     }
     return request.dmp.render('checkout.html', context)
 
 
 class CheckoutForm(forms.Form):
+
     address = forms.CharField(label='Address')
     address2 = forms.CharField(label='Address 2', required=False)
     city = forms.CharField(label='City')
@@ -53,7 +47,10 @@ class CheckoutForm(forms.Form):
     stripeToken = forms.CharField(label='stripeToken', required=False, widget = forms.HiddenInput())
 
     def clean(self):
-        print("success")
+        print()
+
 
     def commit(self, request):
+        cart = amod.User.objects.get(email = request.user).get_shopping_cart()
+        cart.finalize(self.cleaned_data.get('stripeToken'))
         print("success")

@@ -9,10 +9,10 @@ def process_request(request):
     CategoryID = request.dmp.urlparams[0]
 
     if CategoryID != "0":
-        ProductList = cmod.Product.objects.filter(Category = CategoryID)
+        ProductList = cmod.Product.objects.filter(Category = CategoryID, Status = "A")
 
     else:
-        ProductList = cmod.Product.objects.all()
+        ProductList = cmod.Product.objects.filter(Status = "A")
 
 
     Page = int(request.dmp.urlparams[1])

@@ -23,11 +23,13 @@
     <br>
     ${product.Description}
     <br>
-    <a class="btn btn-primary">Buy now</a>
 
-    % if product.__class__.__name__ == "BulkProduct":
-        <input id="quantity" type="number" name="PurchaseQuantity" value=0><br>
-    % endif
+        <form action="/catalog/add/${product.id}/" method="POST">
+            ${ csrf_input }
+        <input id="quantity" type="number" name="PurchaseQuantity" value=1 class="${'' if product.__class__.__name__ == 'BulkProduct' else 'invisible' }">
+        <input type="submit" value="Add to cart" class="btn btn-primary">
+        </form>
+
 
 
 </div>

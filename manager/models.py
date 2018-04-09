@@ -1,9 +1,12 @@
+import traceback
+
 from django.db import models, transaction
 from polymorphic.models import PolymorphicModel
 from django.conf import settings
 from django.forms.models import model_to_dict
 from decimal import Decimal
 from datetime import datetime
+from django import forms
 import stripe
 
 #######################################################################
@@ -95,6 +98,7 @@ class Order(models.Model):
     ship_tracking = models.TextField(null=True, blank=True)
     ship_name = models.TextField(null=True, blank=True)
     ship_address = models.TextField(null=True, blank=True)
+    ship_address2 = models.TextField(null=True, blank=True)
     ship_city = models.TextField(null=True, blank=True)
     ship_state = models.TextField(null=True, blank=True)
     ship_zip_code = models.TextField(null=True, blank=True)
@@ -106,12 +110,9 @@ class Order(models.Model):
 
     def active_items(self, include_tax_item=True):
         '''Returns the active items on this order'''
+        if include_tax_item: return OrderItem.objects.filter(order = self.id, status = 'active')
+        else: return OrderItem.objects.filter(order = self.id, status = 'active').exclude(product = None)
         # create a query object (filter to status='active')
-
-        # if we aren't including the tax item, alter the
-        # query to exclude that OrderItem
-        # I simply used the product name (not a great choice,
-        # but it is acceptable for credit)
 
 
     def get_item(self, product, create=False):
@@ -129,6 +130,7 @@ class Order(models.Model):
 
     def num_items(self):
         '''Returns the number of items in the cart'''
+        print(sum(self.active_items(include_tax_item=False).values_list('quantity', flat=True)))
         return sum(self.active_items(include_tax_item=False).values_list('quantity', flat=True))
 
 
@@ -139,31 +141,79 @@ class Order(models.Model):
 
         Saves this Order and all child OrderLine objects.
         '''
-        # iterate the order items (not including tax item) and get the total price
-        # call recalculate on each item
+        self.total_price = 0
+        if not self.active_items().filter(product = None):
+            taxItem = OrderItem()
+            taxItem.description = "Sales Tax"
+            taxItem.price = 0
+            taxItem.quantity = 1
+            taxItem.extended = 0
+            taxItem.order_id = self.id
+            taxItem.product = None
+            taxItem.save()
+
+        for item in self.active_items(include_tax_item=False):
+            item.recalculate()
+            self.total_price += item.extended
 
         # update/create the tax order item (calculate at 7% rate)
+        taxItem = self.active_items(include_tax_item=True).get(product = None)
+        taxItem.price = self.total_price*7/100
+        taxItem.extended = taxItem.price
+        taxItem.save()
 
         # update the total and save
+        self.total_price += round(taxItem.price,2)
+        self.save()
+
 
 
     def finalize(self, stripe_charge_token):
         '''Runs the payment and finalizes the sale'''
         with transaction.atomic():
-            datetime
             # recalculate just to be sure everything is updated
+            self.recalculate()
 
             # check that all products are available
+            for item in self.active_items(include_tax_item=False):
+                if item.product.__class__.__name__ == "BulkProduct" and item.quantity > item.product.Quantity:
+                    raise forms.ValidationError('Sorry! An Error occurred, try again')
 
             # contact stripe and run the payment (using the stripe_charge_token)
+            stripe.api_key = "sk_test_wadBVqwzbMzhY9jhgE5QqmJW"
+
+            try:
+                charge = stripe.Charge.create(
+                    amount=round(self.total_price*100),
+                    currency='usd',
+                    description='Example charge',
+                    source=stripe_charge_token,
+                )
+            except:
+                traceback.print_exc()
+                raise forms.ValidationError('Sorry! An Error occurred, try again')
 
             # finalize (or create) one or more payment objects
+            NewPayment = Payment()
+            NewPayment.amount = self.total_price
+            NewPayment.order = self
+            NewPayment.payment_date = datetime.now()
+            NewPayment.save()
 
             # set order status to sold and save the order
+            self.status = "sold"
+            self.save()
 
             # update product quantities for BulkProducts
-            # update status for IndividualProducts
+            for item in self.active_items(include_tax_item=False):
+                updateproduct = item.product
+                if item.product.__class__.__name__ == "BulkProduct":
+                    updateproduct.Quantity -= item.quantity
+                    if updateproduct.Quantity == 0: updateproduct.Status = "I"
+                # update status for IndividualProducts
+                else: updateproduct.Status = "I"
 
+                updateproduct.save()
 
 class OrderItem(PolymorphicModel):
     '''A line item on an order'''
@@ -187,12 +237,16 @@ class OrderItem(PolymorphicModel):
     def recalculate(self):
         '''Updates the order item's price, quantity, extended'''
         # update the price if it isn't already set and we have a product
-
+        if self.price == 0 and self.product is not None:
+            self.price = self.product.price
         # default the quantity to 1 if we don't have a quantity set
+        if self.quantity == 0: self.quantity = 1
 
         # calculate the extended (price * quantity)
+        self.extended = self.price*self.quantity
 
         # save the changes
+        self.save()
 
 
 class Payment(models.Model):

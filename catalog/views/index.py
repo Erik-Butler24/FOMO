@@ -1,6 +1,7 @@
 from django_mako_plus import view_function, jscontext
 from manager import models as cmod
 import math
+from account import models as amod
 
 
 
@@ -18,9 +19,16 @@ def process_request(request):
         CatID = cmod.Category.objects.get(id = request.dmp.urlparams[0]).id
         MaxPages = math.ceil((cmod.Product.objects.filter(Category = CatID).count())/6)
 
+    if request.user.is_authenticated:
+        cart = amod.User.objects.get(email = request.user).get_shopping_cart()
+        cartsize = cart.num_items()
+    else:
+        cartsize = 0
+
 
     context = {
         'list': cmod.Category.objects.all(),
+        'cart_size': cartsize,
         jscontext('CatID'): CatID,
         jscontext('CatName'): CatName,
         jscontext('Pagenum'): 1,

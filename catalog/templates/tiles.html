@@ -3,7 +3,6 @@
 <%block name="content">
 <ul id = "product_list">
     % for item in list:
-        % if (item.Status == "A"):
             <li class="product_item">
                 <a href="/catalog/details/${item.id}">
                         <div class="price">$${item.Price}</div>
@@ -14,7 +13,6 @@
                         (${item.Category})
                 </a>
             </li>
-        % endif
     % endfor
 
 </ul>
