@@ -1,0 +1,30 @@
+<%inherit file="app_base.htm" />
+
+<%block name="content">
+
+
+
+<div class="login-page">
+  <div class="form">
+
+          <h1>Ship to:</h1>
+    <form action="" method = "POST" class ="form-group">
+        ${ csrf_input }
+        ${ form }
+        <script
+                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="pk_test_2vupy9Y6rEgLLVi9Hv9OhUTs"
+                data-amount="999"
+                data-name="FOMO"
+                data-description="Widget"
+                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                data-locale="auto"
+                data-label= "Place Order">
+        </script>
+    </form>
+  </div>
+</div>
+
+</%block>
+
+

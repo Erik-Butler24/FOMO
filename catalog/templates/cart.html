@@ -3,35 +3,29 @@
 <%block name="content">
 <h1>Shopping Cart</h1>
 
-<table>
-    <tr>
+<div id="cart_container">
+    <table>
+    % for item in cart:
+        <tr>
 
-        <th>Name</th>
-        <th>Category</th>
-        <th>Price</th>
-        <th>Quantity</th>
+            <td><img class="product_image" src=${STATIC_URL}${item.img_URL()} /></td>
+            <td><a href="/catalog/details/${item.id}">${item.Name}</a></td>
+                        % if item.__class__.__name__ == 'BulkProduct':
+                <td>${item.Quantity}</td>
+            % else:
+                <td>1</td>
+            % endif
+            <td>$${item.Price}</td>
+            <td><a href="/manager/delete/${item.id}">Remove</a></td>
 
-    </tr>
+        </tr>
+    % endfor
+    </table>
+    <br>
+    <b>Total:</b> $200
+    <br>
 
-% for item in cart:
-    <tr>
-        <td>${item.Name}</td>
-        <td>${item.Category}</td>
-        <td>$${item.Price}</td>
-        % if item.__class__.__name__ == 'BulkProduct':
-            <td>${item.Quantity}</td>
-        % else:
-            <td>1</td>
-        % endif
-        <td><a href="/manager/delete/${item.id}">Remove</a></td>
-
-    </tr>
-% endfor
-</table>
-
-<br>
-
-<a href="/catalog/checkout" class="btn btn-primary">Checkout</a>
-
+    <a href="/catalog/checkout" class="btn btn-primary">Checkout</a>
+</div>
 </%block>
 
