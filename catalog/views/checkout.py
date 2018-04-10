@@ -3,7 +3,6 @@ from django.http import HttpResponseRedirect
 from django_mako_plus import view_function
 from manager import models as cmod
 from account import models as amod
-import stripe
 
 
 
@@ -16,7 +15,7 @@ def process_request(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = CheckoutForm(request.POST)
+        form = CheckoutForm(request.POST, request=request)
         # check whether it's valid:
         if form.is_valid():
             CheckoutForm.commit(form, request)
@@ -38,6 +37,10 @@ def process_request(request):
 
 class CheckoutForm(forms.Form):
 
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(CheckoutForm, self).__init__(*args, **kwargs)
+
     address = forms.CharField(label='Address')
     address2 = forms.CharField(label='Address 2', required=False)
     city = forms.CharField(label='City')
@@ -47,10 +50,11 @@ class CheckoutForm(forms.Form):
     stripeToken = forms.CharField(label='stripeToken', required=False, widget = forms.HiddenInput())
 
     def clean(self):
-        print()
+        cart = amod.User.objects.get(email = self.request.user).get_shopping_cart()
+        print("cleaning")
+        cart.finalize(self.cleaned_data.get('stripeToken'))
 
 
     def commit(self, request):
-        cart = amod.User.objects.get(email = request.user).get_shopping_cart()
-        cart.finalize(self.cleaned_data.get('stripeToken'))
-        print("success")
+        print("Success")
+
