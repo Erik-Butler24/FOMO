@@ -20,3 +20,27 @@ font-family: Georgia;
 margin-left: 50px;
 font-size:15pt;
 }
+
+th, td{
+    padding-right: 50px;
+    padding: 8px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    }
+
+th{
+    font-size: 12pt;
+    text-align: center;
+    background-color: #498087;
+    color: white;
+}
+table{
+    margin-top:50px;
+    margin-bottom:50px;
+}
+
+table tr:hover {background-color: #ddd;}
+
+.product_image{
+    width:100px;
+}

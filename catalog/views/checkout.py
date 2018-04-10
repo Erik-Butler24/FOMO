@@ -19,7 +19,7 @@ def process_request(request):
         # check whether it's valid:
         if form.is_valid():
             CheckoutForm.commit(form, request)
-            return HttpResponseRedirect('/catalog/thanks')
+            return HttpResponseRedirect('/catalog/thanks/' + str(cart.id))
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -41,6 +41,7 @@ class CheckoutForm(forms.Form):
         self.request = kwargs.pop('request', None)
         super(CheckoutForm, self).__init__(*args, **kwargs)
 
+    name = forms.CharField(label='Name')
     address = forms.CharField(label='Address')
     address2 = forms.CharField(label='Address 2', required=False)
     city = forms.CharField(label='City')
@@ -51,10 +52,17 @@ class CheckoutForm(forms.Form):
 
     def clean(self):
         cart = amod.User.objects.get(email = self.request.user).get_shopping_cart()
-        print("cleaning")
+        cart.ship_name = self.cleaned_data.get('name')
+        cart.ship_address = self.cleaned_data.get('address')
+        cart.ship_address2 = self.cleaned_data.get('address2')
+        cart.ship_city = self.cleaned_data.get('city')
+        cart.ship_state = self.cleaned_data.get('state')
+        cart.ship_zip_code = self.cleaned_data.get('zip')
+        cart.save()
         cart.finalize(self.cleaned_data.get('stripeToken'))
 
 
     def commit(self, request):
-        print("Success")
+        print("success")
+
 

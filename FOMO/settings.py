@@ -189,6 +189,11 @@ STRIPE_PUBLIC_KEY = 'pk_test_2vupy9Y6rEgLLVi9Hv9OhUTs'
 STRIPE_SECRET_KEY = 'sk_test_wadBVqwzbMzhY9jhgE5QqmJW'
 stripe.api_key = STRIPE_SECRET_KEY
 
+EMAIL_HOST = 'mail.familyorientedmusic.me'
+EMAIL_PORT = 25
+
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 

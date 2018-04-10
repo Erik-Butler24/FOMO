@@ -12,25 +12,44 @@
 %else:
 
         <table>
-        % for item in cart.active_items(include_tax_item = False):
             <tr>
-
-                <td><img class="product_image" src=${STATIC_URL}${item.product.img_URL()} /></td>
-                <td><a href="/catalog/details/${item.product.id}">${item.product.Name}</a></td>
-                            % if item.__class__.__name__ == 'BulkProduct':
-                    <td>${item.quantity}</td>
-                % else:
-                    <td>${item.quantity}</td>
-                % endif
-                <td>$${item.extended}</td>
-                <td><a href="/catalog/remove/${item.id}">Remove</a></td>
+                <th></th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th></th>
 
             </tr>
+
+        % for item in cart.active_items(include_tax_item = False):
+                <tr>
+                    <td><img class="product_image" src=${STATIC_URL}${item.product.img_URL()} /></td>
+                    <td><a href="/catalog/details/${item.product.id}">${item.product.Name}</a></td>
+                    % if item.__class__.__name__ == 'BulkProduct':
+                        <td>${item.quantity}</td>
+                    % else:
+                        <td>${item.quantity}</td>
+                    % endif
+                    <td>$${item.extended}</td>
+                    <td><a href="/catalog/remove/${item.id}">Remove</a></td>
         % endfor
-        </table>
-        <br>
-        <b>Total:</b> $${cart.total_price}
-        <br>
+            <tr>
+                <td></td>
+                <td>Sales Tax:</td>
+                <td></td>
+                <td>$${cart.active_items(include_tax_item = True).get(product = None).extended}</td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <th></th>
+                <th>Total:</th>
+                <th></th>
+                <th>$${cart.total_price}</th>
+                <th></th>
+            </tr>
+
+        </table><br>
 
         <a href="/catalog/checkout" class="btn btn-primary">Checkout</a>
 

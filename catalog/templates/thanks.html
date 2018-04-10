@@ -3,8 +3,44 @@
 <%block name="content">
 <h1>Thank you for choosing FOMO!</h1>
 <h2>Your order should arrive soon</h2>
-<br>
-<a href="/catalog" class="btn btn-primary">Continue Shopping</a>
+
+        <table>
+            <tr>
+                <th></th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+
+        % for item in cart.active_items(include_tax_item = False):
+                <tr>
+                    <td><img class="product_image" src=${STATIC_URL}${item.product.img_URL()} /></td>
+                    <td><a href="/catalog/details/${item.product.id}">${item.product.Name}</a></td>
+                    % if item.__class__.__name__ == 'BulkProduct':
+                        <td>${item.quantity}</td>
+                    % else:
+                        <td>${item.quantity}</td>
+                    % endif
+                    <td>$${item.extended}</td>
+        % endfor
+            <tr>
+                <td></td>
+                <td>Sales Tax:</td>
+                <td></td>
+                <td>$${cart.active_items(include_tax_item = True).get(product = None).extended}</td>
+            </tr>
+
+            <tr>
+                <th></th>
+                <th>Total:</th>
+                <th></th>
+                <th>$${cart.total_price}</th>
+            </tr>
+
+        </table>
+
+        <a href="/catalog" class="btn btn-primary">Continue Shopping</a>
+
 </%block>
 
 

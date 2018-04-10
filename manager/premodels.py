@@ -8,8 +8,7 @@ from decimal import Decimal
 from datetime import datetime
 from django import forms
 import stripe
-from django.core.mail import send_mail
-from account import models as amod
+
 #######################################################################
 ###   Products
 
@@ -202,18 +201,8 @@ class Order(models.Model):
             NewPayment.save()
 
             # set order status to sold and save the order
-            self.order_date = datetime.now()
             self.status = "sold"
             self.save()
-
-            #add products to receipt list
-            recieptlist = 'Thanks for your Order!\n\nDate: ' + str(self.order_date.date()) + '\nTotal: ' + str(self.total_price) + '\n\nShipping to: ' + str(self.ship_name) + ' ' + str(self.ship_address) + ' ' + str(self.ship_address2) + '\n' + str(self.ship_city) + ' ' + str(self.ship_state) + ' ' + str(self.ship_zip_code) + '\n\nItems:\n'
-            for item in self.active_items(include_tax_item=True):
-                    if item.product is not None:
-                        recieptlist += str(item.quantity) +  ' ' + str(item.product.Name) + ' $' + str(item.price) +'\n'
-
-                    else:
-                        recieptlist += '\Sales Tax: $' + str(item.price)
 
             # update product quantities for BulkProducts
             for item in self.active_items(include_tax_item=False):
@@ -225,16 +214,6 @@ class Order(models.Model):
                 else: updateproduct.Status = "I"
 
                 updateproduct.save()
-
-            #Send an email
-            send_mail(
-                'FOMO Recent Purchase',
-                recieptlist,
-                'OrderConfirmation@familyorientedmusic.me',
-                [self.user.email],
-                fail_silently=False,
-            )
-
 
 class OrderItem(PolymorphicModel):
     '''A line item on an order'''
