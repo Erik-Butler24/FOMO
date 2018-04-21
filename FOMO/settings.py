@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'manager',
     'catalog',
     'polymorphic',
+    'rest_framework'
 ]
 
 AUTH_USER_MODEL = 'account.User'
@@ -192,7 +193,11 @@ stripe.api_key = STRIPE_SECRET_KEY
 EMAIL_HOST = 'mail.familyorientedmusic.me'
 EMAIL_PORT = 25
 
-
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/

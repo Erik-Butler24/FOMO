@@ -16,10 +16,18 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.urls import path
+from rest_framework import routers
+from catalog.views import views
+
+router = routers.DefaultRouter()
+router.register(r'', views.ProductViewSet)
+router.register(r'categories', views.CategoryViewSet)
 
 urlpatterns = [
     # the built-in Django administrator
     url(r'^admin/', admin.site.urls),
+
+    url('catalog/search', include(router.urls)),
 
     # urls for any third-party apps go here
 

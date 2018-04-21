@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import permission_required
 def process_request(request):
 
     context = {
-        'list': cmod.Product.objects.filter(Status = 'A'),
+        'list': cmod.Product.objects.filter(),
 
     }
     return request.dmp.render('index.html', context)

@@ -12,6 +12,7 @@
         <th>Description</th>
         <th>Price</th>
         <th>Quantity</th>
+        <th>Status</th>
 
     </tr>
 
@@ -27,6 +28,7 @@
         % else:
             <td>1</td>
         % endif
+        <td>${item.Status}</td>
         <td><a href="/manager/create/${item.id}">Edit</a></td>
         <td><a href="/manager/delete/${item.id}">Delete</a></td>
 

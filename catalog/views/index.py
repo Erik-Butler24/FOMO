@@ -11,13 +11,13 @@ def process_request(request):
     if not request.dmp.urlparams[0] or request.dmp.urlparams[0] == "0":
         CatName = None
         CatID = 0
-        MaxPages = math.ceil((cmod.Product.objects.all().count())/6)
+        MaxPages = math.ceil((cmod.Product.objects.filter(Status = 'A').count())/6)
 
     else:
 
         CatName = cmod.Category.objects.get(id = request.dmp.urlparams[0]).Name
         CatID = cmod.Category.objects.get(id = request.dmp.urlparams[0]).id
-        MaxPages = math.ceil((cmod.Product.objects.filter(Category = CatID).count())/6)
+        MaxPages = math.ceil((cmod.Product.objects.filter(Category = CatID, Status = 'A').count())/6)
 
     if request.user.is_authenticated:
         cart = amod.User.objects.get(email = request.user).get_shopping_cart()
